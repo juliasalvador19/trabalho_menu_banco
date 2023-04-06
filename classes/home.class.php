@@ -24,15 +24,9 @@
             $body = new Body();
             $html->addElemento($body);
 
-            $menu = new Menu("menu-principal");
-            $body->addElemento($menu);
-
-            $ul = new Ul();
-            $menu->addElemento($ul);
-            
-            $ul->addElemento(new Li("<a href='#'>Home</a>"));
-            $ul->addElemento(new Li("<a href='#'>Pessoa</a>"));
-            $ul->addElemento(new Li("<a href='#'>Produto</a>"));
+            $menu = new Menu();
+            $menu->listaMenu();
+            $menu->listaComando();
 
             echo $html;
    
