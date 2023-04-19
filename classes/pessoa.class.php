@@ -2,7 +2,7 @@
 
     include "autoload.php";
 
-    class Home {
+    class Pessoa {
 
         public function montarPagina(){
 
@@ -18,7 +18,7 @@
             $head->addElemento($meta2);
             $head->addElemento($meta3);
 
-            $title = new Title('Trabalho - Menu');
+            $title = new Title('Trabalho - Menu|Pessoa');
             $head->addElemento($title);
             
             $body = new Body();
@@ -32,8 +32,11 @@
             $body = new Body();
             $html->addElemento($body);
 
-            $menu = new Menu();
-            $menu->listaMenu();
+            $table = new Table();
+            echo $table->ListarPessoa();
+            $table->excluirPessoa();
+            $table->alterarPessoa();
+            $table->cadastrarPessoa();
 
             echo $html;
    
