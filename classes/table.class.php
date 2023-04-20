@@ -86,6 +86,9 @@ class Table {
         echo '<input class="caixa" type="datetime-local" name="datacadastro" required><br>';
         echo '<input class="btn btn-success" type="submit" name="cadastrar" value="Cadastrar"><br>';
         echo '</form>';
+        echo '<hr>';
+
+        echo '<a class="btn btn-dark" href="index.php">Voltar menu</a>';
     }
 
     public function ListarProduto() {
@@ -168,6 +171,9 @@ class Table {
         echo '<input class="caixa" type="number" name="total_estoque" autocomplete="off" placeholder="Estoque" required><br>';
         echo '<input class="btn btn-success" type="submit" name="cadastrar" value="Cadastrar"><br>';
         echo '</form>';
+        echo '<hr>';
+
+        echo '<a class="btn btn-dark" href="index.php">Voltar menu</a>';
     }
 
     public function ListarUsuario() {
@@ -248,6 +254,9 @@ class Table {
         echo '<input class="caixa" type="text" name="senha" autocomplete="off"placeholder="Senha" required><br>';
         echo '<input class="btn btn-success" type="submit" name="cadastrar" value="Cadastrar"><br>';
         echo '</form>';
+        echo '<hr>';
+
+        echo '<a class="btn btn-dark" href="index.php">Voltar menu</a>';
     }
 
     
