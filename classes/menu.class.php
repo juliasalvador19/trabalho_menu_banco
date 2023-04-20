@@ -11,9 +11,11 @@
       $query = $banco->prepare($sql);
       $query->execute(); 
       
+
       echo '<ol>';
       foreach($query->fetchAll() as $item){
-        echo '<li><a href="'.$item['acao'].'">'.$item['texto'].'</a></li>';
+
+        echo '<li><a href="'.str_replace('?pagina=','',$item['acao']).'.php">'.$item['texto'].'</a></li>';
       }
       echo '</ol>';
     }

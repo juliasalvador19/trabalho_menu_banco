@@ -15,9 +15,9 @@ class Table {
         $querypessoa->execute();
 
         $menu = '<table>';
-        $menu .= '<tr><th>ID</th><th>Nome</th><th>E-mail</th><th>Data Cadastro</th><th>Ações</th></tr>';
+        $menu .= '<tr><th>ID</th><th>Nome</th><th>E-mail</th><th>Data Cadastro</th><th style="text-align:center" colspan="2">Ações</th></tr>';
         foreach($querypessoa->fetchAll() as $item) {
-            $menu .= '<tr><td>' . $item[0] . '</td><td>' . $item[1] . '</td><td>' . $item[2] . '</td><td>' . $item[3] . '</td><td><a href="?excluir=' . $item[0] . '">Excluir</a> | <a href="?alterar=' . $item[0] . '">Alterar</a></td></tr>';
+            $menu .= '<tr><td>' . $item[0] . '</td><td>' . $item[1] . '</td><td>' . $item[2] . '</td><td>' . $item[3] . '</td><td><a class="btn btn-danger" href="?excluir=' . $item[0] . '">Excluir</a> | <a class="btn btn-primary" href="?alterar=' . $item[0] . '">Alterar</a></td></tr>';
         }
         $menu .= '</table><hr>';
 
@@ -92,9 +92,9 @@ class Table {
         $queryproduto->execute();
 
         $menu = '<table>';
-        $menu .= '<tr><th>ID</th><th>Nome</th><th>Valor</th><th>Estoque</th><th>Ações</th></tr>';
+        $menu .= '<tr><th>ID</th><th>Nome</th><th>Valor</th><th>Estoque</th><th style="text-align:center" colspan="2">Ações</th></tr>';
         foreach($queryproduto->fetchAll() as $item) {
-            $menu .= '<tr><td>' . $item[0] . '</td><td>' . $item[1] . '</td><td>' . $item[2] . '</td><td>' . $item[3] . '</td><td><a href="?excluir=' . $item[0] . '">Excluir</a> | <a href="?alterar=' . $item[0] . '">Alterar</a></td></tr>';
+            $menu .= '<tr><td>' . $item[0] . '</td><td>' . $item[1] . '</td><td>' . $item[2] . '</td><td>' . $item[3] . '</td><td><a class="btn btn-danger" href="?excluir=' . $item[0] . '">Excluir</a> | <a class="btn btn-primary" href="?alterar=' . $item[0] . '">Alterar</a></td></tr>';
         }
         $menu .= '</table><hr>';
 
@@ -163,6 +163,85 @@ class Table {
         echo '<input type="text" name="nome" placeholder="Nome do produto" required><br>';
         echo '<input type="number" name="valor" placeholder="Valor" required><br>';
         echo '<input type="number" name="total_estoque" placeholder="Estoque" required><br>';
+        echo '<input type="submit" name="cadastrar" value="Cadastrar"><br>';
+        echo '</form>';
+    }
+
+    public function ListarUsuario() {
+        $sqlusuario = 'SELECT id, nome, email FROM usuario';
+        $queryusuario = $this->conexao->conexaoBanco()->prepare($sqlusuario);
+        $queryusuario->execute();
+
+        $menu = '<table>';
+        $menu .= '<tr><th>ID</th><th>Nome</th><th>Email</th><th style="text-align:center" colspan="2">Ações</th></tr>';
+        foreach($queryusuario->fetchAll() as $item) {
+            $menu .= '<tr><td>' . $item[0] . '</td><td>' . $item[1] . '</td><td>' . $item[2] . '</td><td><a class="btn btn-danger" href="?excluir=' . $item[0] . '">Excluir</a> | <a class="btn btn-primary" href="?alterar=' . $item[0] . '">Alterar</a></td></tr>';
+        }
+        $menu .= '</table><hr>';
+
+        return $menu;
+    }
+
+    public function excluirUsuario() {
+        if(isset($_GET['excluir'])) {
+            $id = $_GET['excluir'];
+            $sql = "DELETE FROM usuario WHERE id = ?";
+            $query = $this->conexao->conexaoBanco()->prepare($sql);
+            $excluido = $query->execute([$id]);
+
+            header("Location: lista_usuario.php");
+            exit;
+        }
+    }
+
+    public function alterarUsuario() {
+        if(isset($_GET['alterar'])) {
+            $id = $_GET['alterar'];
+            $sql = "SELECT nome, email FROM usuario WHERE id = ?";
+            $query = $this->conexao->conexaoBanco()->prepare($sql);
+            $query->execute([$id]);
+            $usuario = $query->fetch();
+
+            echo '<form method="post">';
+            echo '<input type="text" name="nome" value="' . $usuario[0] . '">';
+            echo '<input type="text" name="email" value="' . $usuario[1] . '">';
+            echo '<input type="submit" name="alterar" value="Alterar">';
+            echo '</form>';
+
+            if(isset($_POST['alterar'])) {
+                $nome = $_POST['nome'];
+                $email = $_POST['email'];
+                $sql = "UPDATE usuario SET nome = ?, email = ? WHERE id = ?";
+                $query = $this->conexao->conexaoBanco()->prepare($sql);
+                $atualizado = $query->execute([$nome, $email, $id]);
+
+                header("Location: lista_usuario.php");
+                exit;
+                
+            }
+        }
+    }
+
+    public function cadastrarUsuario() {
+        if(isset($_POST['cadastrar'])) {
+            $id = $_POST['id'];
+           	$nome = $_POST['nome'];
+            $email = $_POST['email'];
+            $senha =  $_POST['senha'];
+            $sql = "INSERT INTO usuario (id, nome, email, senha) VALUES (?, ?, ?, ?)";
+            $query = $this->conexao->conexaoBanco()->prepare($sql);
+            $cadastrado = $query->execute([$id, $nome, $email, $senha]);
+    
+            header("Location: lista_usuario.php");
+            exit;
+        }
+		        
+		echo '<h4>Cadastrar usuário</h4>';
+        echo '<form method="post">';
+        echo '<input type="number" name="id" placeholder="Codigo" required><br>';
+        echo '<input type="text" name="nome" placeholder="Nome" required><br>';
+        echo '<input type="text" name="email" placeholder="Email" required><br>';
+        echo '<input type="text" name="senha" placeholder="Senha" required><br>';
         echo '<input type="submit" name="cadastrar" value="Cadastrar"><br>';
         echo '</form>';
     }
