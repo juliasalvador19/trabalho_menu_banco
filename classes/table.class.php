@@ -14,10 +14,10 @@ class Table {
         $querypessoa = $this->conexao->conexaoBanco()->prepare($sqlpessoa);
         $querypessoa->execute();
 
-        $menu = '<table>';
-        $menu .= '<tr><th>ID</th><th>Nome</th><th>E-mail</th><th>Data Cadastro</th><th style="text-align:center" colspan="2">Ações</th></tr>';
+        $menu = '<table class="table">';
+        $menu .= '<thead class="thead-dark"><tr><th>ID</th><th>Nome</th><th>E-mail</th><th>Data Cadastro</th><th>Ações</th></tr></thead>';
         foreach($querypessoa->fetchAll() as $item) {
-            $menu .= '<tr><td>' . $item[0] . '</td><td>' . $item[1] . '</td><td>' . $item[2] . '</td><td>' . $item[3] . '</td><td><a class="btn btn-danger" href="?excluir=' . $item[0] . '">Excluir</a> | <a class="btn btn-primary" href="?alterar=' . $item[0] . '">Alterar</a></td></tr>';
+            $menu .= '<tr><td>' . $item[0] . '</td><td>' . $item[1] . '</td><td>' . $item[2] . '</td><td>' . $item[3] . '</td><td><a class="btn btn-danger" href="?excluir=' . $item[0] . '">Excluir</a> <a class="btn btn-primary" href="?alterar=' . $item[0] . '">Alterar</a></td></tr>';
         }
         $menu .= '</table><hr>';
 
@@ -44,11 +44,13 @@ class Table {
             $query->execute([$id]);
             $pessoa = $query->fetch();
 
+
             echo '<form method="post">';
-            echo '<input type="text" name="nome" value="' . $pessoa[0] . '">';
-            echo '<input type="text" name="email" value="' . $pessoa[1] . '">';
-            echo '<input type="submit" name="alterar" value="Alterar">';
+            echo '<input class="caixa" type="text" name="nome" value="' . $pessoa[0] . '">'. '&nbsp';
+            echo '<input class="caixa" type="text" name="email" value="' . $pessoa[1] . '">' . '<br>';
+            echo '<input class="btn btn-warning" type="submit" name="alterar" value="Alterar">';
             echo '</form>';
+            echo '<hr>';
 
             if(isset($_POST['alterar'])) {
                 $nome = $_POST['nome'];
@@ -79,10 +81,10 @@ class Table {
     
         echo '<h4>Cadastrar pessoa</h4>';
         echo '<form method="post">';
-        echo '<input type="text" name="nome" placeholder="Nome da pessoa" required><br>';
-        echo '<input type="text" name="email" placeholder="Email da pessoa" required><br>';
-        echo '<input type="date" name="datacadastro" placeholder="Data de cadastro da pessoa" required><br>';
-        echo '<input type="submit" name="cadastrar" value="Cadastrar"><br>';
+        echo '<input class="caixa" type="text" name="nome" autocomplete="off" placeholder="Nome" required><br>';
+        echo '<input class="caixa" type="text" name="email" autocomplete="off" placeholder="Email" required><br>';
+        echo '<input class="caixa" type="datetime-local" name="datacadastro" required><br>';
+        echo '<input class="btn btn-success" type="submit" name="cadastrar" value="Cadastrar"><br>';
         echo '</form>';
     }
 
@@ -91,10 +93,10 @@ class Table {
         $queryproduto = $this->conexao->conexaoBanco()->prepare($sqlproduto);
         $queryproduto->execute();
 
-        $menu = '<table>';
-        $menu .= '<tr><th>ID</th><th>Nome</th><th>Valor</th><th>Estoque</th><th style="text-align:center" colspan="2">Ações</th></tr>';
+        $menu = '<table class="table">';
+        $menu .= '<thead class="thead-dark"><tr><th>ID</th><th>Nome</th><th>Valor</th><th>Estoque</th><th>Ações</th></tr></thead>';
         foreach($queryproduto->fetchAll() as $item) {
-            $menu .= '<tr><td>' . $item[0] . '</td><td>' . $item[1] . '</td><td>' . $item[2] . '</td><td>' . $item[3] . '</td><td><a class="btn btn-danger" href="?excluir=' . $item[0] . '">Excluir</a> | <a class="btn btn-primary" href="?alterar=' . $item[0] . '">Alterar</a></td></tr>';
+            $menu .= '<tr><td>' . $item[0] . '</td><td>' . $item[1] . '</td><td>' . $item[2] . '</td><td>' . $item[3] . '</td><td><a class="btn btn-danger" href="?excluir=' . $item[0] . '">Excluir</a> <a class="btn btn-primary" href="?alterar=' . $item[0] . '">Alterar</a></td></tr>';
         }
         $menu .= '</table><hr>';
 
@@ -122,11 +124,12 @@ class Table {
             $produto = $query->fetch();
 
             echo '<form method="post">';
-            echo '<input type="text" name="nome" value="' . $produto[0] . '">';
-            echo '<input type="number" name="valor" value="' . $produto[1] . '">';
-            echo '<input type="number" name="total_estoque" value="' . $produto[2] . '">';
-            echo '<input type="submit" name="alterar" value="Alterar">';
+            echo '<input class="caixa" type="text" name="nome" value="' . $produto[0] . '">&nbsp';
+            echo '<input class="caixa" type="number" name="valor" value="' . $produto[1] . '">&nbsp';
+            echo '<input class="caixa" type="number" name="total_estoque" value="' . $produto[2] . '"><br>';
+            echo '<input class="btn btn-warning" type="submit" name="alterar" value="Alterar">';
             echo '</form>';
+            echo '<hr>';
 
             if(isset($_POST['alterar'])) {
                 $nome = $_POST['nome'];
@@ -159,11 +162,11 @@ class Table {
     
         echo '<h4>Cadastrar produto</h4>';
         echo '<form method="post">';
-        echo '<input type="number" name="id" placeholder="Codigo do produto" required><br>';
-        echo '<input type="text" name="nome" placeholder="Nome do produto" required><br>';
-        echo '<input type="number" name="valor" placeholder="Valor" required><br>';
-        echo '<input type="number" name="total_estoque" placeholder="Estoque" required><br>';
-        echo '<input type="submit" name="cadastrar" value="Cadastrar"><br>';
+        echo '<input class="caixa" type="number" name="id" autocomplete="off" placeholder="Código" required><br>';
+        echo '<input class="caixa" type="text" name="nome" autocomplete="off" placeholder="Nome" required><br>';
+        echo '<input class="caixa" type="number" name="valor" autocomplete="off" placeholder="Valor" required><br>';
+        echo '<input class="caixa" type="number" name="total_estoque" autocomplete="off" placeholder="Estoque" required><br>';
+        echo '<input class="btn btn-success" type="submit" name="cadastrar" value="Cadastrar"><br>';
         echo '</form>';
     }
 
@@ -172,10 +175,10 @@ class Table {
         $queryusuario = $this->conexao->conexaoBanco()->prepare($sqlusuario);
         $queryusuario->execute();
 
-        $menu = '<table>';
-        $menu .= '<tr><th>ID</th><th>Nome</th><th>Email</th><th style="text-align:center" colspan="2">Ações</th></tr>';
+        $menu = '<table class="table">';
+        $menu .= '<thead  class="thead-dark"><tr><th>ID</th><th>Nome</th><th>Email</th><th>Ações</th></tr></thead>';
         foreach($queryusuario->fetchAll() as $item) {
-            $menu .= '<tr><td>' . $item[0] . '</td><td>' . $item[1] . '</td><td>' . $item[2] . '</td><td><a class="btn btn-danger" href="?excluir=' . $item[0] . '">Excluir</a> | <a class="btn btn-primary" href="?alterar=' . $item[0] . '">Alterar</a></td></tr>';
+            $menu .= '<tr><td>' . $item[0] . '</td><td>' . $item[1] . '</td><td>' . $item[2] . '</td><td><a class="btn btn-danger" href="?excluir=' . $item[0] . '">Excluir</a> <a class="btn btn-primary" href="?alterar=' . $item[0] . '">Alterar</a></td></tr>';
         }
         $menu .= '</table><hr>';
 
@@ -203,10 +206,11 @@ class Table {
             $usuario = $query->fetch();
 
             echo '<form method="post">';
-            echo '<input type="text" name="nome" value="' . $usuario[0] . '">';
-            echo '<input type="text" name="email" value="' . $usuario[1] . '">';
-            echo '<input type="submit" name="alterar" value="Alterar">';
+            echo '<input class="caixa" type="text" name="nome" value="' . $usuario[0] . '">&nbsp';
+            echo '<input class="caixa" type="text" name="email" value="' . $usuario[1] . '"><br>';
+            echo '<input class="btn btn-warning" type="submit" name="alterar" value="Alterar">';
             echo '</form>';
+            echo '<hr>';
 
             if(isset($_POST['alterar'])) {
                 $nome = $_POST['nome'];
@@ -238,11 +242,11 @@ class Table {
 		        
 		echo '<h4>Cadastrar usuário</h4>';
         echo '<form method="post">';
-        echo '<input type="number" name="id" placeholder="Codigo" required><br>';
-        echo '<input type="text" name="nome" placeholder="Nome" required><br>';
-        echo '<input type="text" name="email" placeholder="Email" required><br>';
-        echo '<input type="text" name="senha" placeholder="Senha" required><br>';
-        echo '<input type="submit" name="cadastrar" value="Cadastrar"><br>';
+        echo '<input class="caixa" type="number" name="id" autocomplete="off" placeholder="Código" required><br>';
+        echo '<input class="caixa" type="text" name="nome" autocomplete="off" placeholder="Nome" required><br>';
+        echo '<input class="caixa" type="text" name="email" autocomplete="off" placeholder="Email" required><br>';
+        echo '<input class="caixa" type="text" name="senha" autocomplete="off"placeholder="Senha" required><br>';
+        echo '<input class="btn btn-success" type="submit" name="cadastrar" value="Cadastrar"><br>';
         echo '</form>';
     }
 

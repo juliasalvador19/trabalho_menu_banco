@@ -11,12 +11,9 @@
             $head = new Head();
             $html->addElemento($head);
             
-            $meta1 = new Meta('UTF-8', null, null, null);
-            $meta2 = new Meta(null, 'X-UA-Compatible', 'IE=edge', null);
-            $meta3 = new Meta(null, null, 'width=device-width, initial-scale=1.0', 'viewport');
-            $head->addElemento($meta1);
-            $head->addElemento($meta2);
-            $head->addElemento($meta3);
+            $head->addElemento(new Meta('UTF-8', null, null, null));
+            $head->addElemento(new Meta(null, 'X-UA-Compatible', 'IE=edge', null));
+            $head->addElemento(new Meta(null, null, 'width=device-width, initial-scale=1.0', 'viewport'));
 
             $title = new Title('Trabalho - Menu|Pessoa');
             $head->addElemento($title);
@@ -24,10 +21,8 @@
             $body = new Body();
             $html->addElemento($body);
 
-            echo $html;
-
-            $link = new Link ('https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css', 'stylesheet');
-            $head->addElemento($link);
+            $head->addElemento(new Link ('https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css', 'stylesheet'));
+            $head->addElemento(new Link ('style.css', 'stylesheet'));
             
             $body = new Body();
             $html->addElemento($body);

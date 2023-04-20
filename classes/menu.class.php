@@ -11,13 +11,11 @@
       $query = $banco->prepare($sql);
       $query->execute(); 
       
-
-      echo '<ol>';
+      echo '<nav class="navbar navbar-dark bg-dark">';
       foreach($query->fetchAll() as $item){
-
-        echo '<li><a href="'.str_replace('?pagina=','',$item['acao']).'.php">'.$item['texto'].'</a></li>';
+        echo '<a class="navbar-brand" href="'.str_replace('?pagina=','',$item['acao']).'.php">'.$item['texto'].'</a>';
       }
-      echo '</ol>';
+      echo '</nav>';
     }
 
   
