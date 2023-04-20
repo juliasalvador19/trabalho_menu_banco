@@ -15,7 +15,7 @@
             $head->addElemento(new Meta(null, 'X-UA-Compatible', 'IE=edge', null));
             $head->addElemento(new Meta(null, null, 'width=device-width, initial-scale=1.0', 'viewport'));
 
-            $title = new Title('Trabalho - Menu|Usuario');
+            $title = new Title('Trabalho - Menu|Usuário');
             $head->addElemento($title);
             
             $body = new Body();
